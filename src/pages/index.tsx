@@ -1,34 +1,59 @@
-import Head from "next/head";
-import Link from "next/link";
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin, { type DateClickArg } from '@fullcalendar/interaction';
+import { useState } from "react";
+import EventForm from "~/components/event";
+import Image from "next/image";
 
 export default function Home() {
+  const [openModal, setOpenModal] = useState(false);
+  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleDateClick = (arg: DateClickArg) => {
+    setModalPosition({
+      ...modalPosition,
+      x: arg.jsEvent.clientX,
+      y: arg.jsEvent.clientY,
+    });
+    setOpenModal(true);
+    setSelectedDate(arg.dateStr);
+  }
 
   return (
-    <>
-      <Head>
-        <title>Condorsoft</title>
-        <meta name="description" content="Condorsoft technical test" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#04040c] to-[#15162c]">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Condorsoft Technical Test 
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://condorsoft.dev/"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">About our family →</h3>
-              <div className="text-lg">
-                We create the best products and look for the best.
-              </div>
-            </Link>
-          </div>
+    <div className="flex justify-center bg-slate-300 items-center h-screen">
+      <Image className={"fixed z-0 h-screen w-full"} loading='lazy' src={'/images/background.jpeg'} alt="background" width={2880} height={1920}/>
+      <div className="w-9/12 h-4/5 bg-white p-6 rounded-md z-10">
+        <div className="flex justify-between">
+          <h1 className="font-semibold text-2xl">Schedule</h1>
+          {/* Avatar */}
+          <div className="w-10 h-10 rounded-full bg-slate-300 mb-4"></div>
         </div>
-      </main>
-    </>
+        <div className="h-full">
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              start: 'prev',
+              center: 'title',
+              end: 'next'
+            }}
+            aspectRatio={2}
+            fixedWeekCount={false}
+            dayHeaderFormat={{
+              weekday: 'long'
+            }}
+            dateClick={handleDateClick}
+          />
+        </div>
+      </div>
+      {openModal &&
+        <EventForm
+          modalPosition={modalPosition}
+          date={selectedDate}
+          publishEvent={()=>0}
+        />
+      }
+    </div>
   );
 }
