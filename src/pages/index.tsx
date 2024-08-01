@@ -2,13 +2,22 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin, { type DateClickArg } from '@fullcalendar/interaction';
 import { useState } from "react";
-import EventForm from "~/components/event";
-import Image from "next/image";
+import useSWR from 'swr';
+import EventForm from '~/components/event';
+import Image from 'next/image';
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 
 export default function Home() {
   const [openModal, setOpenModal] = useState(false);
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const [selectedDate, setSelectedDate] = useState('');
+
+  const { data, error } = useSWR('/api/event', fetcher );
+
+  if (error) return <div>Failed to load</div>
+  if (!data) return <div>Loading...</div>
 
   const handleDateClick = (arg: DateClickArg) => {
     setModalPosition({
@@ -19,6 +28,19 @@ export default function Home() {
     setOpenModal(true);
     setSelectedDate(arg.dateStr);
   }
+
+  const publishEvent = async (event: EventData) => {
+    await fetch('/api/event', {
+      body: JSON.stringify(event),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    setOpenModal(false);
+  }
+
+  console.log('44 ', data);
 
   return (
     <div className="flex justify-center bg-slate-300 items-center h-screen">
@@ -32,7 +54,7 @@ export default function Home() {
         <div className="h-full">
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
+            initialView='dayGridMonth'
             headerToolbar={{
               start: 'prev',
               center: 'title',
@@ -44,6 +66,7 @@ export default function Home() {
               weekday: 'long'
             }}
             dateClick={handleDateClick}
+            events={data}
           />
         </div>
       </div>
@@ -51,7 +74,7 @@ export default function Home() {
         <EventForm
           modalPosition={modalPosition}
           date={selectedDate}
-          publishEvent={()=>0}
+          publishEvent={publishEvent}
         />
       }
     </div>

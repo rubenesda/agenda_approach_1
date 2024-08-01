@@ -1,6 +1,6 @@
 type EventData = {
   title: string;
-  date: string;
+  start: string;
   time: string;
   color: string;
 };

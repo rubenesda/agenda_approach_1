@@ -13,7 +13,9 @@ datasource db {
 model Event {
     id        Int      @id @default(autoincrement())
     title     String
-    date      DateTime
+    start     String
+    time      String
+    color     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

@@ -14,7 +14,7 @@ export default function EventForm({ modalPosition, date, publishEvent } : EventF
   const formatDate = `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
   const initalDate: EventData = {
     title: '',
-    date,
+    start: date,
     time: '',
     color: '',
   };
