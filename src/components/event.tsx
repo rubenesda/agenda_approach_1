@@ -40,10 +40,8 @@ export default function EventForm({ modalPosition, date, publishEvent } : EventF
   };
 
   return (
-    <div className="flex flex-col p-4 bg-white rounded-md w-64 shadow-md border"
+    <div className="flex flex-col p-4 bg-white rounded-md w-64 shadow-md border z-10 absolute"
       style={{
-        zIndex: 1,
-        position: 'absolute',
         left: `${modalPosition.x}px`,
         top: `${modalPosition.y}px`,
       }}
