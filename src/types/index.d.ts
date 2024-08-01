@@ -1,4 +1,4 @@
-interface EventData {
+type EventData = {
   title: string;
   date: string;
   time: string;
