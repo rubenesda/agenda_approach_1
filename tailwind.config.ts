@@ -11,4 +11,7 @@ export default {
     },
   },
   plugins: [],
+  variants: {
+    display:['group-hover']
+  },
 } satisfies Config;
