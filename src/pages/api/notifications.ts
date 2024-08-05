@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           scheduleId: true,
         },
         where: {
-          id: parseInt(eventId),
+          id: eventId,
         },
       });
 

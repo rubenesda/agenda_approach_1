@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     // Process a POST request
     const eventData = req.body as EventServer;
-    const { start, time, title } = eventData;
+    const { start, time, title, email } = eventData;
 
     try {
       // Save the event in the database
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         destination: `${env.BACKEND_URL}/api/notifications`,
         cron,
         body: JSON.stringify({
-          email: 'rubenesda@gmail.com',
+          email,
           date: start,
           time,
           event: title,
@@ -54,24 +54,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       sucess: true,
       message: 'Successfully created'
     });
-  } else if (req.method === 'GET') {
-    // Get all events
-    try {
-      const events = await db.event.findMany({
-        select: {
-          title: true,
-          start: true,
-          time: true,
-          color: true,
-        }
-      });
-
-      await db.$disconnect();
-      return res.status(200).json(events);
-
-    } catch (error) {
-      await db.$disconnect();
-      return res.status(400).json({ sucess: false, message: error });
-    }
   }
 }
