@@ -37,7 +37,7 @@ export default function Home() {
   channel.bind(realtimeEvent, handler);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error, mutate } = useSWR('/api/events', fetcher );
+  const { data, error, mutate } = useSWR(`/api/events/${session?.user?.email}`, fetcher );
 
   if (status === 'unauthenticated') return router.push('/');
 

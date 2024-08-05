@@ -82,7 +82,7 @@ export default function Signup({ switchToLogin, handleSignUp, errorMessage }: Cr
           disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
           invalid:border-pink-500 invalid:text-pink-600
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-          placeholder="xavier@email.com" pattern="[\w-\.]+@([\w-]+\.)+[\w-]{2,4}" title="Only valid emails" type="email" onChange={handleNewAccountChange}
+          placeholder="xavier@email.com" title="Only valid emails" type="email" onChange={handleNewAccountChange}
           />
         <label className="text-sm mb-1.5">Password</label>
         <input id="password" className="h-10 rounded-md border w-full px-3 py-2 mb-4"  placeholder="****" type="password" onChange={handleNewAccountChange}/>
