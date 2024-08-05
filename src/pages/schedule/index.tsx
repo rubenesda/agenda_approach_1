@@ -36,6 +36,7 @@ export default function Home() {
   const channel = pusher.subscribe(realtimeChannel);
   channel.bind(realtimeEvent, handler);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, error, mutate } = useSWR('/api/events', fetcher );
 
   if (status === 'unauthenticated') return router.push('/');
@@ -99,6 +100,7 @@ export default function Home() {
               weekday: 'long'
             }}
             dateClick={handleDateClick}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             events={data}
           />
         </div>
