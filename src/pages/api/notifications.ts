@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import sendgrid from '@sendgrid/mail';
-import { Client } from "@upstash/qstash";
+import { Client } from '@upstash/qstash';
 import Pusher from 'pusher';
 import { db } from '~/server/db';
-import { env } from "~/env";
+import { env } from '~/env';
 
 sendgrid.setApiKey(env.SENDGRID_API_KEY);
 
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Send the notification
       await sendgrid.send({
         to: `${email}`, // Your email where you'll receive emails
-        from: 'rubenesdadev@gmail.com', // your website email address here
+        from: env.SENDGRID_VERIFIED_SENDER, // your website email address here
         subject: `Reminder: ${event}`,
         html: `<div>Reminder the next event ${event} at ${date}, ${time}</div>`,
       });

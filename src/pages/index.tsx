@@ -11,7 +11,7 @@ export default function Welcome() {
   const [errorLogin, setErrorLoing] = useState('');
   const [errorSignup, setErrorSignup] = useState('');
 
-  async function handleLogin(login: LoginData) {
+  const handleLogin = async (login: LoginData) => {
     const response = await signIn('credentials', {
       ...login,
       redirect: false,
@@ -22,7 +22,7 @@ export default function Welcome() {
     return router.push('/schedule');
   }
 
-  async function handleSignUp(account: AccountData) {
+  const handleSignUp = async (account: AccountData) => {
     const response = await fetch('/api/accounts', {
       body: JSON.stringify(account),
       method: 'POST',
@@ -37,12 +37,12 @@ export default function Welcome() {
     setIsLogin(true);
   }
 
-  function handleSwitchToLogin() {
+  const handleSwitchToLogin = () => {
     setIsLogin(true);
     setErrorSignup('');
   }
 
-  function handleSwitchToSignup() {
+  const handleSwitchToSignup = () => {
     setIsLogin(false);
     setErrorLoing('');
   }
