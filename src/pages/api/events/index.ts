@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Client } from "@upstash/qstash";
+import { Client } from '@upstash/qstash';
 import { db } from '~/server/db';
-import { env } from "~/env";
+import { env } from '~/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {

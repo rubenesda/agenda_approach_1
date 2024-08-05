@@ -35,7 +35,9 @@ export const env = createEnv({
     REALTIME_APP_CHANNEL: z
       .string(),
     REALTIME_APP_EVENT: z
-      .string()
+      .string(),
+    SENDGRID_VERIFIED_SENDER: z
+      .string(),
   },
 
   /**
@@ -71,6 +73,7 @@ export const env = createEnv({
     REALTIME_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
     REALTIME_APP_CHANNEL: process.env.PUSHER_APP_CHANNEL,
     REALTIME_APP_EVENT: process.env.PUSHER_APP_EVENT,
+    SENDGRID_VERIFIED_SENDER: process.env.SENDGRID_VERIFIED_SENDER,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_REALTIME_APP_KEY: process.env.NEXT_PUBLIC_REALTIME_APP_KEY,
     NEXT_PUBLIC_REALTIME_APP_CLUSTER: process.env.NEXT_PUBLIC_REALTIME_APP_CLUSTER,

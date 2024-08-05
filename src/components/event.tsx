@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 type EventFormProps = {
   modalPosition: {
@@ -21,12 +21,12 @@ export default function EventForm({ modalPosition, date, publishEvent } : EventF
   const [event, setEvent] = useState(initalDate);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.id === "title") {
+    if (e.target.id === 'title') {
       setEvent({
         ...event,
         title: e.target.value,
       });
-    } else if (e.target.id === "color") {
+    } else if (e.target.id === 'color') {
       setEvent({
         ...event,
         color: e.target.value,

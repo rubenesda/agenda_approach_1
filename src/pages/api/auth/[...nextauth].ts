@@ -1,6 +1,6 @@
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import { db } from '~/server/db';
 import bcrypt from 'bcrypt';
 
@@ -13,10 +13,10 @@ export const authOptions = {
   },
   providers: [
     CredentialsProvider({
-      type: "credentials",
+      type: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
