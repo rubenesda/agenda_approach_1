@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     // Process a POST request
-    console.log('8 Hello!', req.body);
     const { email, name, lastName, password } = req.body as AccountData;
 
     if (!email || !name || !lastName || !password) {

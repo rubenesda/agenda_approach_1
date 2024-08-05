@@ -19,7 +19,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log('22 ', credentials);
         if (!credentials?.email || !credentials.password) {
           return null;
         }
@@ -31,7 +30,6 @@ export const authOptions = {
         });
 
         if (!user) {
-          console.log('33 ', );
           return null;
         }
 

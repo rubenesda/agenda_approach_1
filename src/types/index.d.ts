@@ -3,6 +3,7 @@ type EventData = {
   start: string;
   time: string;
   color: string;
+  email?: string;
 };
 
 type LoginData = {
@@ -20,4 +21,9 @@ type AccountData = {
 type APIResponse = {
   success: string;
   message: string;
+};
+
+type NotificationData = {
+  title: string;
+  dateTime: string;
 };

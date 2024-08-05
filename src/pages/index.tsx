@@ -23,7 +23,7 @@ export default function Welcome() {
   }
 
   async function handleSignUp(account: AccountData) {
-    const response = await fetch('/api/account', {
+    const response = await fetch('/api/accounts', {
       body: JSON.stringify(account),
       method: 'POST',
       headers: {

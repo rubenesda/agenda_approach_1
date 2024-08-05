@@ -17,6 +17,25 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    SENDGRID_API_KEY: z
+      .string(),
+    QSTASH_TOKEN: z
+      .string(),
+    BACKEND_URL: z
+      .string()
+      .url(),
+    REALTIME_APP_KEY: z
+      .string(),
+    REALTIME_APP_ID: z
+      .string(),
+    REALTIME_APP_SECRET: z
+      .string(),
+    REALTIME_APP_CLUSTER: z
+      .string(),
+    REALTIME_APP_CHANNEL: z
+      .string(),
+    REALTIME_APP_EVENT: z
+      .string()
   },
 
   /**
@@ -26,6 +45,14 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_REALTIME_APP_KEY: z
+      .string(),
+    NEXT_PUBLIC_REALTIME_APP_CLUSTER: z
+      .string(),
+    NEXT_PUBLIC_REALTIME_APP_CHANNEL: z
+      .string(),
+    NEXT_PUBLIC_REALTIME_APP_EVENT: z
+      .string()
   },
 
   /**
@@ -35,7 +62,20 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+    QSTASH_TOKEN: process.env.QSTASH_TOKEN,
+    BACKEND_URL: process.env.BACKEND_URL,
+    REALTIME_APP_KEY: process.env.PUSHER_APP_KEY,
+    REALTIME_APP_ID: process.env.PUSHER_APP_ID,
+    REALTIME_APP_SECRET: process.env.PUSHER_APP_SECRET,
+    REALTIME_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
+    REALTIME_APP_CHANNEL: process.env.PUSHER_APP_CHANNEL,
+    REALTIME_APP_EVENT: process.env.PUSHER_APP_EVENT,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    NEXT_PUBLIC_REALTIME_APP_KEY: process.env.NEXT_PUBLIC_REALTIME_APP_KEY,
+    NEXT_PUBLIC_REALTIME_APP_CLUSTER: process.env.NEXT_PUBLIC_REALTIME_APP_CLUSTER,
+    NEXT_PUBLIC_REALTIME_APP_CHANNEL: process.env.NEXT_PUBLIC_REALTIME_APP_CHANNEL,
+    NEXT_PUBLIC_REALTIME_APP_EVENT: process.env.NEXT_PUBLIC_REALTIME_APP_EVENT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

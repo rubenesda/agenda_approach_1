@@ -11,13 +11,15 @@ datasource db {
 }
 
 model Event {
-    id        Int      @id @default(autoincrement())
-    title     String
-    start     String
-    time      String
-    color     String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          Int      @id @default(autoincrement())
+    title       String
+    start       String
+    time        String
+    color       String
+    email       String
+    scheduleId  String?  @unique
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }
 
 model User {

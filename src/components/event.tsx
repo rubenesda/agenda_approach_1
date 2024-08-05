@@ -60,7 +60,7 @@ export default function EventForm({ modalPosition, date, publishEvent } : EventF
         </div>
         <div className="flex justify-between mb-3">
           <label className="text-sm flex items-center">Time</label>
-          <input id="time" className="text-sm  h-9 border rounded-sm w-32 px-3" placeholder="00:00 AM" value={event.time} onChange={handleChange}/>
+          <input id="time" type="time" className="text-sm  h-9 border rounded-sm w-32 px-3" placeholder="00:00 AM" value={event.time} onChange={handleChange}/>
         </div>
         <div className="flex justify-between mb-3">
           <label className="text-sm flex items-center">Color</label>

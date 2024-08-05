@@ -1,27 +1,42 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin, { type DateClickArg } from '@fullcalendar/interaction';
-import { useState } from "react";
+import { useState } from 'react';
 import useSWR from 'swr';
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Pusher from 'pusher-js';
+import toast, { Toaster } from 'react-hot-toast';
 import EventForm from '~/components/event';
 import Image from 'next/image';
 import Avatar from '~/components/avatar';
+import Notification from '~/components/notification';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function Home() {
+  const realtimeChannel = process.env.NEXT_PUBLIC_REALTIME_APP_CHANNEL ?? '';
+  const realtimeEvent = process.env.NEXT_PUBLIC_REALTIME_APP_EVENT ?? '';
   const { data: session, status } = useSession();
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const [selectedDate, setSelectedDate] = useState('');
 
-  console.log('21 session', session);
-  console.log('22 status', status);
+  const pusher = new Pusher(process.env.NEXT_PUBLIC_REALTIME_APP_KEY ?? '', {
+    cluster: process.env.NEXT_PUBLIC_REALTIME_APP_CLUSTER ?? '',
+  });
 
-  const { data, error } = useSWR('/api/event', fetcher );
+  const handler = (data: NotificationData) => {
+    toast.custom((t) => (
+      <Notification t={t} data={data}/>
+    ));
+  };
+
+  const channel = pusher.subscribe(realtimeChannel);
+  channel.bind(realtimeEvent, handler);
+
+  const { data, error, mutate } = useSWR('/api/events', fetcher );
 
   if (status === 'unauthenticated') return router.push('/');
 
@@ -39,17 +54,24 @@ export default function Home() {
   }
 
   const publishEvent = async (event: EventData) => {
-    await fetch('/api/event', {
-      body: JSON.stringify(event),
+    const eventInput: EventData = {
+      ...event,
+      email: session?.user?.email ?? '',
+    };
+    setOpenModal(false);
+
+    await fetch('/api/events', {
+      body: JSON.stringify(eventInput),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    setOpenModal(false);
+
+    await mutate({ ...data });
   }
 
-  async function handleLogOut() {
+  const handleLogOut = async () => {
     await signOut({ redirect: false });
     router.push('/');
   }
@@ -88,6 +110,10 @@ export default function Home() {
           publishEvent={publishEvent}
         />
       }
+      <Toaster
+        position='bottom-right'
+        reverseOrder={false}
+      />
     </div>
   );
 }
